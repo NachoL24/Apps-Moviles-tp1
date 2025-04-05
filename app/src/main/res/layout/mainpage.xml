@@ -1,7 +1,152 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/background"
+    android:padding="16dp">
 
+    <!-- Titulo -->
+    <TextView
+        android:id="@+id/tvWelcomeTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Bienvenido, Juan Torres"
+        android:textColor="@color/text"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginTop="25sp"
+        android:layout_marginBottom="32dp"/>
+
+    <!-- Subtítulo -->
+    <TextView
+        android:id="@+id/tvWelcomeSubtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Antes de comenzar, le solicitamos ingresar la siguiente información..."
+        android:textColor="@color/text"
+        android:textSize="16sp"
+        android:layout_marginBottom="32dp"/>
+
+    <!-- Seccion Plataforma -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Plataforma utilizada"
+        android:textColor="@color/text"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:layout_marginBottom="32dp"/>
+
+    <RadioGroup
+        android:id="@+id/rgPlatform"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="32dp">
+
+        <RadioButton
+            android:id="@+id/rbAndroid"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Android"
+            android:textColor="@color/text"
+            android:buttonTint="@color/primary"/>
+
+        <RadioButton
+            android:id="@+id/rbApple"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Apple"
+            android:textColor="@color/text"
+            android:buttonTint="@color/primary"/>
+    </RadioGroup>
+
+    <!-- Sección Preferencias -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Preferencias"
+        android:textColor="@color/text"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <CheckBox
+            android:id="@+id/cbProgramming"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Programación"
+            android:textColor="@color/text"
+            android:textSize="16sp"/>
+
+        <CheckBox
+            android:id="@+id/cbNetworks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Redes"
+            android:textColor="@color/text"
+            android:textSize="16sp"/>
+
+        <CheckBox
+            android:id="@+id/cbHardware"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Hardware"
+            android:textColor="@color/text"
+            android:textSize="16sp"/>
+
+        <CheckBox
+            android:id="@+id/cbSecurity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Seguridad"
+            android:textColor="@color/text"
+            android:textSize="16sp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <CheckBox
+                android:id="@+id/cbOther"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Otra"
+                android:textColor="@color/text"
+                android:textSize="16sp"/>
+
+            <EditText
+                android:id="@+id/etOtherSpecify"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:hint="Especificar"
+                android:textColor="@color/text"
+                android:textColorHint="#A0A0A0"
+                android:visibility="gone"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Botón de Aceptar -->
+    <Button
+        android:id="@+id/btnAccept"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Aceptar"
+        android:layout_marginTop="50dp"
+        android:backgroundTint="@color/primary"
+        android:textColor="@android:color/white"/>
 </LinearLayout>
