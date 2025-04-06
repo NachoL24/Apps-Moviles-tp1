@@ -123,10 +123,10 @@
             <CheckBox
                 android:id="@+id/cbOther"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:text="Otra"
                 android:textColor="@color/text"
-                android:textSize="16sp"/>
+                android:textSize="16sp" />
 
             <EditText
                 android:id="@+id/etOtherSpecify"
