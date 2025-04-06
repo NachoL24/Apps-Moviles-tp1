@@ -1,7 +1,149 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/gridLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/PasswordLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Contraseña"
+            android:textColor="#000000"
+            app:layout_constraintBottom_toTopOf="@+id/PasswordInput"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.162"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/PasswordConfirmInput"
+            android:layout_width="306dp"
+            android:layout_height="39dp"
+            android:layout_marginTop="32dp"
+            android:ems="10"
+            android:inputType="textPassword"
+            android:paddingLeft="10dp"
+            android:background="@drawable/input_border"
+            android:drawableEnd="@drawable/outline_remove_red_eye_24"
+            android:paddingEnd="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.523"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/PasswordInput" />
+
+        <TextView
+            android:id="@+id/PasswordConfirmLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Repetir Contraseña"
+            android:textColor="#000000"
+            app:layout_constraintBottom_toTopOf="@+id/PasswordConfirmInput"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.189"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/RegisterText"
+            android:layout_width="193dp"
+            android:layout_height="49dp"
+            android:layout_marginTop="150dp"
+            android:fontFamily="sans-serif-black"
+            android:gravity="center"
+            android:text="Registro"
+            android:textSize="24dp"
+            android:textColor="#000000"
+            app:layout_column="0"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_row="0" />
+
+        <TextView
+            android:id="@+id/NameLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nombre*"
+            android:textColor="#000000"
+            app:layout_constraintBottom_toTopOf="@+id/NameInput"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.155"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/NameInput"
+            android:layout_width="306dp"
+            android:layout_height="39dp"
+            android:layout_marginTop="32dp"
+            android:ems="10"
+            android:inputType="text"
+            android:paddingLeft="10dp"
+            android:background="@drawable/input_border"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.523"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/RegisterText" />
+
+        <TextView
+            android:id="@+id/EmailLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Email*"
+            android:textColor="#000000"
+            app:layout_constraintBottom_toTopOf="@+id/EmailInput"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.148"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/EmailInput"
+            android:layout_width="306dp"
+            android:layout_height="39dp"
+            android:layout_marginTop="32dp"
+            android:ems="10"
+            android:inputType="textEmailAddress"
+            android:background="@drawable/input_border"
+            android:paddingLeft="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.523"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/NameInput" />
+
+        <EditText
+            android:id="@+id/PasswordInput"
+            android:layout_width="306dp"
+            android:layout_height="39dp"
+            android:layout_marginTop="32dp"
+            android:ems="10"
+            android:inputType="textPassword"
+            android:paddingLeft="10dp"
+            android:background="@drawable/input_border"
+            android:drawableEnd="@drawable/outline_remove_red_eye_24"
+            android:paddingEnd="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.523"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/EmailInput" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="306dp"
+            android:layout_height="39dp"
+            android:layout_marginTop="40dp"
+            android:text="Button"
+            android:textColor="@color/text"
+            android:background="@drawable/input_border"
+            android:backgroundTint="@color/primary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.523"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/PasswordConfirmInput" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

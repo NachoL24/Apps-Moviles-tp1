@@ -3,4 +3,5 @@
     <color name="background">#2C363F</color>
     <color name="primary">#758BFD</color>
     <color name="text">#EBEDF5</color>
+    <color name="error">#FF4444</color>
 </resources>
