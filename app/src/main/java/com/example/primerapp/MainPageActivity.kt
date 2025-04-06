@@ -15,40 +15,49 @@ class MainPageActivity : AppCompatActivity() {
         binding = MainpageBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Mensaje de bienvenida para Juan Torres
         val userName = "Juan Torres"
         val welcome = getString(R.string.welcome_message, userName)
         binding.tvWelcomeTitle.text = welcome
 
+        // Mostrar input si se selecciona "Otra"
         binding.cbOther.setOnCheckedChangeListener { _, isChecked ->
             binding.etOtherSpecify.visibility = if (isChecked) View.VISIBLE else View.GONE
         }
 
+        // Autoexclusion entre android y apple
+        binding.rbAndroid.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) binding.rbApple.isChecked = false
+        }
 
-        // Validacion de Pickers
+        binding.rbApple.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) binding.rbAndroid.isChecked = false
+        }
+
+        // Boton aceptar
         binding.btnAccept.setOnClickListener {
-
-            // Validacion de Plataforma
-            val selectedId = binding.rgPlatform.checkedRadioButtonId
-            if (selectedId == -1) {
-                Toast.makeText(this, "Debe seleccionar una plataforma", Toast.LENGTH_SHORT).show()
+            // Validar plataforma
+            val platformSelected = binding.rbAndroid.isChecked || binding.rbApple.isChecked
+            if (!platformSelected) {
+                Toast.makeText(this, "Debe seleccionar una plataforma.", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
+            // Validar al menos una preferencia
+            val prefsChecked = listOf(
+                binding.cbProgramming,
+                binding.cbNetworks,
+                binding.cbHardware,
+                binding.cbSecurity,
+                binding.cbOther
+            ).any { it.isChecked }
 
-            // Validacion de Preferencias
-            val isAnyPreferenceChecked =
-                binding.cbProgramming.isChecked ||
-                        binding.cbNetworks.isChecked ||
-                        binding.cbHardware.isChecked ||
-                        binding.cbSecurity.isChecked ||
-                        binding.cbOther.isChecked
-
-            if (!isAnyPreferenceChecked) {
-                Toast.makeText(this, "Debe seleccionar al menos una preferencia", Toast.LENGTH_SHORT).show()
+            if (!prefsChecked) {
+                Toast.makeText(this, "Debe seleccionar al menos una preferencia.", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
+            // Si esta todo ok
+            Toast.makeText(this, "Información guardada correctamente.", Toast.LENGTH_SHORT).show()
         }
     }
 }
