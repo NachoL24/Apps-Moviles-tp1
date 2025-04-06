@@ -2,15 +2,19 @@ package com.example.primerapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.primerapp.databinding.MainpageBinding
+import com.example.primerapp.databinding.RegisterBinding
 
-class MainPageActivity : AppCompatActivity() {
+class RegisterActivity : AppCompatActivity() {
 
-    private lateinit var binding: MainpageBinding
+    private lateinit var binding: RegisterBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
-        binding = MainpageBinding.inflate(layoutInflater)
+
+        binding = RegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
     }
+
 }
