@@ -12,5 +12,9 @@ class MainPageActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = MainpageBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val userName = "Juan Torres"
+        val welcome = getString(R.string.welcome_message, userName)
+        binding.tvWelcomeTitle.text = welcome
     }
 }

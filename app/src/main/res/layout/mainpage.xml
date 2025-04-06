@@ -12,10 +12,9 @@
         android:id="@+id/tvWelcomeTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25sp"
+        android:layout_marginTop="55sp"
         android:layout_marginBottom="32dp"
         android:gravity="center"
-        android:text="Bienvenido, Juan Torres"
         android:textColor="@color/text"
         android:textSize="24sp"
         android:textStyle="bold" />
@@ -38,32 +37,66 @@
         android:textColor="@color/text"
         android:textStyle="bold"
         android:textSize="18sp"
-        android:layout_marginBottom="32dp"/>
+        android:layout_marginBottom="16dp"/>
 
+    <!-- Grupo de opciones de plataforma - Modificado -->
     <RadioGroup
         android:id="@+id/rgPlatform"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginBottom="32dp">
+        android:layout_marginBottom="32dp"
+        android:gravity="center">
 
-        <RadioButton
-            android:id="@+id/rbAndroid"
+        <!-- Opción Android -->
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Android"
-            android:textColor="@color/text"
-            android:buttonTint="@color/primary"/>
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:padding="8dp">
 
-        <RadioButton
-            android:id="@+id/rbApple"
+            <ImageView
+                android:id="@+id/ivAndroid"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:tint="@color/text"
+                android:src="@drawable/android"
+                android:contentDescription="@string/android_logo"/>
+
+            <RadioButton
+                android:id="@+id/rbAndroid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/primary"
+                android:layout_marginStart="16dp"/>
+        </LinearLayout>
+
+        <!-- Opción Apple -->
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Apple"
-            android:textColor="@color/text"
-            android:buttonTint="@color/primary"/>
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:padding="8dp">
+
+            <ImageView
+                android:id="@+id/ivApple"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:tint="@color/text"
+                android:src="@drawable/apple"
+                android:contentDescription="@string/apple_logo"/>
+
+            <RadioButton
+                android:id="@+id/rbApple"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/primary"
+                android:layout_marginStart="16dp"/>
+        </LinearLayout>
     </RadioGroup>
 
     <!-- Sección Preferencias -->
