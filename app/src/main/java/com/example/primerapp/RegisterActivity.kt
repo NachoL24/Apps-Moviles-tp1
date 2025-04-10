@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import com.example.primerapp.databinding.RegisterBinding
+import com.google.android.material.textfield.TextInputLayout
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -62,9 +63,8 @@ class RegisterActivity : AppCompatActivity() {
 
             if (password.isNullOrEmpty()) {
                 binding.PasswordInput.error = "La contraseña es obligatoria"
-                binding.NameInputLayout.isEndIconVisible = false
+                binding.PasswordInputLayout.endIconMode = TextInputLayout.END_ICON_NONE
                 binding.PasswordInput.requestFocus()
-                binding.NameInputLayout.isEndIconVisible = true
                 return@setOnClickListener
             }
 
@@ -84,8 +84,8 @@ class RegisterActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            if (password != passwordConfirm) {
-                binding.PasswordConfirmInput.error = "Las contraseñas no coinciden"
+            if (!password.toString().equals(passwordConfirm.toString())) {
+                binding.PasswordConfirmInput.error = "Las contraseñas no coinciden" + password + " " + passwordConfirm
                 binding.NameInputLayout.isEndIconVisible = false
                 binding.PasswordConfirmInput.requestFocus()
                 binding.NameInputLayout.isEndIconVisible = true
