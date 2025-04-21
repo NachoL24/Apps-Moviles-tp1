@@ -3,6 +3,8 @@ package com.example.primerapp
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.widget.Toast
 import com.example.primerapp.databinding.LoginBinding
 
@@ -18,6 +20,9 @@ class LoginActivity : AppCompatActivity() {
         binding = LoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.inputUsername.addTextChangedListener(createTextWatcher(binding.usernameLayout))
+        binding.inputPassword.addTextChangedListener(createTextWatcher(binding.passwordLayout))
+
         binding.buttonLogin.setOnClickListener {
             val username = binding.inputUsername.text.toString()
             val password = binding.inputPassword.text.toString()
@@ -27,6 +32,7 @@ class LoginActivity : AppCompatActivity() {
             binding.passwordLayout.error = null
 
             if (username.isEmpty()) {
+                binding.usernameLayout.isErrorEnabled = true // Habilitar el estado de error
                 binding.usernameLayout.error = "El nombre de usuario es requerido"
                 binding.inputUsername.requestFocus()
                 return@setOnClickListener
@@ -58,6 +64,20 @@ class LoginActivity : AppCompatActivity() {
 
         binding.forgotPassword.setOnClickListener {
             Toast.makeText(this, "Ir a la pantalla de Olvidé Contraseña", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    // Crear un TextWatcher para limpiar errores automáticamente
+    private fun createTextWatcher(inputLayout: com.google.android.material.textfield.TextInputLayout): TextWatcher {
+        return object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (!s.isNullOrEmpty()) {
+                    inputLayout.error = null // Eliminar el texto del error
+                    inputLayout.isErrorEnabled = false // Eliminar el espacio reservado para el error
+                }
+            }
+            override fun afterTextChanged(s: Editable?) {}
         }
     }
 }

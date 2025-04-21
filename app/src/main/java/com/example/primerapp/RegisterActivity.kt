@@ -13,91 +13,93 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: RegisterBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
 
         binding = RegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.PasswordInput.addTextChangedListener(object : TextWatcher{
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
+        // Agregar TextWatchers para limpiar errores automáticamente
+        binding.NameInput.addTextChangedListener(createTextWatcher(binding.NameInputLayout))
+        binding.EmailInput.addTextChangedListener(createTextWatcher(binding.EmailInputLayout))
+        binding.PasswordInput.addTextChangedListener(createTextWatcher(binding.PasswordInputLayout))
+        binding.PasswordConfirmInput.addTextChangedListener(createTextWatcher(binding.PasswordConfirmInputLayout))
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if(!s.isNullOrEmpty()){
-                    binding.PasswordInput.error = null
-                    binding.PasswordInputLayout.isEndIconVisible = true
-                }
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-            }
-        })
-
-
-        binding.button.setOnClickListener{
+        binding.button.setOnClickListener {
             val name = binding.NameInput.text
             val email = binding.EmailInput.text
             val password = binding.PasswordInput.text
             val passwordConfirm = binding.PasswordConfirmInput.text
 
-            binding.NameInput.error = null
-            binding.EmailInput.error = null
-            binding.PasswordInput.error = null
-            binding.PasswordConfirmInput.error = null
+            // Limpiar errores previos
+            binding.NameInputLayout.error = null
+            binding.EmailInputLayout.error = null
+            binding.PasswordInputLayout.error = null
+            binding.PasswordConfirmInputLayout.error = null
 
-
+            // Validar nombre
             if (name.isNullOrEmpty()) {
-                binding.NameInput.error = "El nombre es obligatorio"
+                binding.NameInputLayout.isErrorEnabled = true
+                binding.NameInputLayout.error = "El nombre es obligatorio"
                 binding.NameInput.requestFocus()
-                binding.NameInputLayout.isEndIconVisible = false
                 return@setOnClickListener
             }
 
+            // Validar email
             if (email.isNullOrEmpty()) {
-                binding.EmailInput.error = "El email es obligatorio"
+                binding.EmailInputLayout.isErrorEnabled = true
+                binding.EmailInputLayout.error = "El email es obligatorio"
                 binding.EmailInput.requestFocus()
-                binding.NameInputLayout.isEndIconVisible = false
                 return@setOnClickListener
             }
 
+            // Validar contraseña
             if (password.isNullOrEmpty()) {
-                binding.PasswordInput.error = "La contraseña es obligatoria"
-                binding.PasswordInputLayout.endIconMode = TextInputLayout.END_ICON_NONE
+                binding.PasswordInputLayout.isErrorEnabled = true
+                binding.PasswordInputLayout.error = "La contraseña es obligatoria"
                 binding.PasswordInput.requestFocus()
                 return@setOnClickListener
             }
 
-            if (password.length < 6){
-                binding.PasswordInput.error = "La contraseña debe tener al menos 6 caracteres"
-                binding.PasswordInputLayout.isEndIconVisible = false
+            if (password.length < 6) {
+                binding.PasswordInputLayout.isErrorEnabled = true
+                binding.PasswordInputLayout.error = "La contraseña debe tener al menos 6 caracteres"
                 binding.PasswordInput.requestFocus()
-                binding.PasswordInputLayout.isEndIconVisible = true
                 return@setOnClickListener
             }
 
+            // Validar confirmación de contraseña
             if (passwordConfirm.isNullOrEmpty()) {
-                binding.PasswordConfirmInput.error = "La confirmación de contraseña es obligatoria"
-                binding.NameInputLayout.isEndIconVisible = false
+                binding.PasswordConfirmInputLayout.isErrorEnabled = true
+                binding.PasswordConfirmInputLayout.error = "La confirmación de contraseña es obligatoria"
                 binding.PasswordConfirmInput.requestFocus()
-                binding.NameInputLayout.isEndIconVisible = true
                 return@setOnClickListener
             }
 
-            if (!password.toString().equals(passwordConfirm.toString())) {
-                binding.PasswordConfirmInput.error = "Las contraseñas no coinciden" + password + " " + passwordConfirm
-                binding.NameInputLayout.isEndIconVisible = false
+            if (password.toString() != passwordConfirm.toString()) {
+                binding.PasswordConfirmInputLayout.isErrorEnabled = true
+                binding.PasswordConfirmInputLayout.error = "Las contraseñas no coinciden"
                 binding.PasswordConfirmInput.requestFocus()
-                binding.NameInputLayout.isEndIconVisible = true
                 return@setOnClickListener
             }
 
+            // Si todo está correcto, navegar al login
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
             finish()
         }
-
     }
 
-
+    // Crear un TextWatcher para limpiar errores automáticamente
+    private fun createTextWatcher(inputLayout: TextInputLayout): TextWatcher {
+        return object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (!s.isNullOrEmpty()) {
+                    inputLayout.error = null // Eliminar el texto del error
+                    inputLayout.isErrorEnabled = false // Eliminar el espacio reservado para el error
+                }
+            }
+            override fun afterTextChanged(s: Editable?) {}
+        }
+    }
 }
