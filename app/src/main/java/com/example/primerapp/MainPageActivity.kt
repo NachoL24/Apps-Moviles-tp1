@@ -1,9 +1,11 @@
 package com.example.primerapp
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import com.example.primerapp.databinding.MainpageBinding
 
 class MainPageActivity : AppCompatActivity() {
@@ -11,6 +13,10 @@ class MainPageActivity : AppCompatActivity() {
     private lateinit var binding: MainpageBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        val sharedPreferences = getSharedPreferences("theme_prefs", MODE_PRIVATE)
+        val themeMode = sharedPreferences.getInt("theme_mode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+        AppCompatDelegate.setDefaultNightMode(themeMode)
+
         super.onCreate(savedInstanceState)
         binding = MainpageBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -19,30 +25,24 @@ class MainPageActivity : AppCompatActivity() {
         val welcome = getString(R.string.welcome_message, userName)
         binding.tvWelcomeTitle.text = welcome
 
-        // Mostrar input si se selecciona "Otra"
         binding.cbOther.setOnCheckedChangeListener { _, isChecked ->
             binding.etOtherSpecify.visibility = if (isChecked) View.VISIBLE else View.GONE
         }
 
-        // Autoexclusion entre android y apple
         binding.rbAndroid.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) binding.rbApple.isChecked = false
         }
-
         binding.rbApple.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) binding.rbAndroid.isChecked = false
         }
 
-        // Boton aceptar
         binding.btnAccept.setOnClickListener {
-            // Validar plataforma
             val platformSelected = binding.rbAndroid.isChecked || binding.rbApple.isChecked
             if (!platformSelected) {
                 Toast.makeText(this, "Debe seleccionar una plataforma.", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            // Validar al menos una preferencia
             val prefsChecked = listOf(
                 binding.cbProgramming,
                 binding.cbNetworks,
@@ -56,8 +56,39 @@ class MainPageActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            // Si esta todo ok
             Toast.makeText(this, "Información guardada correctamente.", Toast.LENGTH_SHORT).show()
         }
+
+        binding.btnThemeToggle.setOnClickListener {
+            val sharedPreferences = getSharedPreferences("theme_prefs", MODE_PRIVATE)
+            val currentMode = sharedPreferences.getInt("theme_mode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+
+            val newMode = when (currentMode) {
+                AppCompatDelegate.MODE_NIGHT_YES -> AppCompatDelegate.MODE_NIGHT_NO
+                AppCompatDelegate.MODE_NIGHT_NO -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+                else -> AppCompatDelegate.MODE_NIGHT_YES
+            }
+
+            AppCompatDelegate.setDefaultNightMode(newMode)
+            saveThemePreference(newMode)
+            delegate.applyDayNight()
+        }
+
+        binding.btnBack.setOnClickListener {
+            if (isTaskRoot) {
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+                finish()
+            } else {
+                onBackPressedDispatcher.onBackPressed()
+            }
+        }
+    }
+
+    private fun saveThemePreference(mode: Int) {
+        val sharedPreferences = getSharedPreferences("theme_prefs", MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putInt("theme_mode", mode)
+        editor.apply()
     }
 }

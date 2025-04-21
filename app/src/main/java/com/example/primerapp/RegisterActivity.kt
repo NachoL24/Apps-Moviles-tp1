@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import androidx.appcompat.app.AppCompatDelegate
 import com.example.primerapp.databinding.RegisterBinding
 import com.google.android.material.textfield.TextInputLayout
 
@@ -13,12 +14,14 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: RegisterBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+        val sharedPreferences = getSharedPreferences("theme_prefs", MODE_PRIVATE)
+        val themeMode = sharedPreferences.getInt("theme_mode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+        AppCompatDelegate.setDefaultNightMode(themeMode)
 
+        super.onCreate(savedInstanceState)
         binding = RegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Agregar TextWatchers para limpiar errores automáticamente
         binding.NameInput.addTextChangedListener(createTextWatcher(binding.NameInputLayout))
         binding.EmailInput.addTextChangedListener(createTextWatcher(binding.EmailInputLayout))
         binding.PasswordInput.addTextChangedListener(createTextWatcher(binding.PasswordInputLayout))
@@ -30,13 +33,11 @@ class RegisterActivity : AppCompatActivity() {
             val password = binding.PasswordInput.text
             val passwordConfirm = binding.PasswordConfirmInput.text
 
-            // Limpiar errores previos
             binding.NameInputLayout.error = null
             binding.EmailInputLayout.error = null
             binding.PasswordInputLayout.error = null
             binding.PasswordConfirmInputLayout.error = null
 
-            // Validar nombre
             if (name.isNullOrEmpty()) {
                 binding.NameInputLayout.isErrorEnabled = true
                 binding.NameInputLayout.error = "El nombre es obligatorio"
@@ -44,7 +45,6 @@ class RegisterActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            // Validar email
             if (email.isNullOrEmpty()) {
                 binding.EmailInputLayout.isErrorEnabled = true
                 binding.EmailInputLayout.error = "El email es obligatorio"
@@ -52,7 +52,6 @@ class RegisterActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            // Validar contraseña
             if (password.isNullOrEmpty()) {
                 binding.PasswordInputLayout.isErrorEnabled = true
                 binding.PasswordInputLayout.error = "La contraseña es obligatoria"
@@ -67,7 +66,6 @@ class RegisterActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            // Validar confirmación de contraseña
             if (passwordConfirm.isNullOrEmpty()) {
                 binding.PasswordConfirmInputLayout.isErrorEnabled = true
                 binding.PasswordConfirmInputLayout.error = "La confirmación de contraseña es obligatoria"
@@ -82,24 +80,51 @@ class RegisterActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            // Si todo está correcto, navegar al login
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
             finish()
         }
+
+        binding.btnBack.setOnClickListener {
+            if (isTaskRoot) {
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+                finish()
+            } else {
+                onBackPressedDispatcher.onBackPressed()
+            }
+        }
+
+        binding.btnThemeToggle.setOnClickListener {
+            val sharedPreferences = getSharedPreferences("theme_prefs", MODE_PRIVATE)
+            val currentMode = sharedPreferences.getInt("theme_mode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+            
+            val newMode = when (currentMode) {
+                AppCompatDelegate.MODE_NIGHT_YES -> AppCompatDelegate.MODE_NIGHT_NO
+                AppCompatDelegate.MODE_NIGHT_NO -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+                else -> AppCompatDelegate.MODE_NIGHT_YES
+            }
+            
+            AppCompatDelegate.setDefaultNightMode(newMode)
+            saveThemePreference(newMode)
+        }
     }
 
-    // Crear un TextWatcher para limpiar errores automáticamente
     private fun createTextWatcher(inputLayout: TextInputLayout): TextWatcher {
         return object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (!s.isNullOrEmpty()) {
-                    inputLayout.error = null // Eliminar el texto del error
-                    inputLayout.isErrorEnabled = false // Eliminar el espacio reservado para el error
                 }
             }
             override fun afterTextChanged(s: Editable?) {}
         }
+    }
+
+    private fun saveThemePreference(mode: Int) {
+        val sharedPreferences = getSharedPreferences("theme_prefs", MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putInt("theme_mode", mode)
+        editor.apply()
     }
 }
