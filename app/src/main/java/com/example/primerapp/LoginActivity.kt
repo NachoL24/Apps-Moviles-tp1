@@ -11,8 +11,8 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var binding: LoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        val verifyUser = "Juan Torres";
-        val verifyPass = "1234utn";
+        val verifyUser = "Juan Torres"
+        val verifyPass = "1234utn"
         super.onCreate(savedInstanceState)
 
         binding = LoginBinding.inflate(layoutInflater)
@@ -22,17 +22,18 @@ class LoginActivity : AppCompatActivity() {
             val username = binding.inputUsername.text.toString()
             val password = binding.inputPassword.text.toString()
 
-            binding.inputUsername.error = null
-            binding.inputPassword.error = null
+            // Limpiar errores previos
+            binding.usernameLayout.error = null
+            binding.passwordLayout.error = null
 
             if (username.isEmpty()) {
-                binding.inputUsername.error = "El nombre de usuario es requerido"
+                binding.usernameLayout.error = "El nombre de usuario es requerido"
                 binding.inputUsername.requestFocus()
                 return@setOnClickListener
             }
 
             if (password.isEmpty()) {
-                binding.inputPassword.error = "La contraseña es requerida"
+                binding.passwordLayout.error = "La contraseña es requerida"
                 binding.inputPassword.requestFocus()
                 return@setOnClickListener
             }
@@ -42,7 +43,7 @@ class LoginActivity : AppCompatActivity() {
                 return@setOnClickListener
             } else {
                 Toast.makeText(this, "¡Inicio de sesión exitoso!", Toast.LENGTH_LONG).show()
-                //Navegar a la pantalla principal
+                // Navegar a la pantalla principal
                 val intent = Intent(this, MainPageActivity::class.java)
                 startActivity(intent)
                 finish()
@@ -50,16 +51,13 @@ class LoginActivity : AppCompatActivity() {
         }
 
         binding.registerLink.setOnClickListener {
-            // Navegar a la pantalla de registro
              val intent = Intent(this, RegisterActivity::class.java)
              startActivity(intent)
-
-            finish()
+             finish()
         }
 
         binding.forgotPassword.setOnClickListener {
             Toast.makeText(this, "Ir a la pantalla de Olvidé Contraseña", Toast.LENGTH_SHORT).show()
         }
     }
-
 }
